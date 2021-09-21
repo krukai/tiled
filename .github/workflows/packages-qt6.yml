@@ -209,8 +209,6 @@ jobs:
     strategy:
       matrix:
         include:
-        - arch: 32
-          openssl_arch: x86
         - arch: 64
           openssl_arch: x64
 
