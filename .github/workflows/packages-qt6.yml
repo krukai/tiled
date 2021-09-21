@@ -1,4 +1,4 @@
-name: Build Packages
+name: Build Packages (Qt 6)
 
 on:
   push:
@@ -67,6 +67,9 @@ jobs:
 
     - name: Setup Qbs
       run: |
+        type qmake
+        qmake -query
+        qmake -version
         qbs --version
         qbs setup-toolchains --detect
         qbs config defaultProfile x86_64-linux-gnu-gcc-9
