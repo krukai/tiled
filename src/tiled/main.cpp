@@ -47,14 +47,18 @@
 #include <memory>
 
 #ifdef Q_OS_WIN
+
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#if QT_VERSION >= 0x050700
+
+#if QT_VERSION >= 0x050700 && QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QtPlatformHeaders\QWindowsWindowFunctions>
-#endif // QT_VERSION >= 0x050700
+#endif
+
 #ifdef ERROR
 #undef ERROR
 #endif
+
 #endif // Q_OS_WIN
 
 using namespace Tiled;
@@ -496,7 +500,7 @@ int main(int argc, char *argv[])
     w.show();
 
     a.setActivationWindow(&w);
-#if defined(Q_OS_WIN) && QT_VERSION >= 0x050700
+#if defined(Q_OS_WIN) && QT_VERSION >= 0x050700 && QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QWindowsWindowFunctions::setWindowActivationBehavior(QWindowsWindowFunctions::AlwaysActivateWindow);
 #endif
 

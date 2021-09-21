@@ -104,7 +104,7 @@
 #include <QUndoView>
 #include <QVariantAnimation>
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QtPlatformHeaders\QWindowsWindowFunctions>
 #endif
 
@@ -882,7 +882,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
     connect(mAutomappingManager, &AutomappingManager::errorsOccurred,
             this, &MainWindow::autoMappingError);
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     connect(preferences, &Preferences::useOpenGLChanged, this, &MainWindow::ensureHasBorderInFullScreen);
 #endif
 
@@ -924,7 +924,7 @@ void MainWindow::commitData(QSessionManager &manager)
 
 bool MainWindow::event(QEvent *event)
 {
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     if (event->type() == QEvent::WinIdChange)
         ensureHasBorderInFullScreen();
 #endif
@@ -2033,7 +2033,7 @@ void MainWindow::onPropertyTypesEditorClosed()
 
 void MainWindow::ensureHasBorderInFullScreen()
 {
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     // Workaround issue #1576
     static bool hasBorderInFullScreen = false;
 
