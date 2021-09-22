@@ -90,6 +90,9 @@
             <File Source="$(var.QtDir)\bin\Qt$(var.QtVersionMajor)Qml.dll"/>
             <File Source="$(var.QtDir)\bin\Qt$(var.QtVersionMajor)Svg.dll"/>
             <File Source="$(var.QtDir)\bin\Qt$(var.QtVersionMajor)Widgets.dll"/>
+            <?if $(var.QtVersionMajor) = 6 ?>
+              <File Source="$(var.QtDir)\bin\Qt$(var.QtVersionMajor)OpenGLWidgets.dll"/>
+            <?endif ?>
 
             <?ifdef MingwDir ?>
               <?if $(var.Platform) = x64 ?>

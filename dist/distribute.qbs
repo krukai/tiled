@@ -79,6 +79,9 @@ Product {
                     "Qt" + major + "Svg" + postfix,
                     "Qt" + major + "Widgets" + postfix
                 );
+
+                if (Qt.core.versionMajor >= 6)
+                    list.push("Qt" + major + "OpenGLWidgets" + postfix);
             }
 
             if (qbs.targetOS.contains("windows")) {
