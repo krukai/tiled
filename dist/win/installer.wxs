@@ -91,6 +91,7 @@
             <File Source="$(var.QtDir)\bin\Qt$(var.QtVersionMajor)Svg.dll"/>
             <File Source="$(var.QtDir)\bin\Qt$(var.QtVersionMajor)Widgets.dll"/>
             <?if $(var.QtVersionMajor) = 6 ?>
+              <File Source="$(var.QtDir)\bin\Qt$(var.QtVersionMajor)OpenGL.dll"/>
               <File Source="$(var.QtDir)\bin\Qt$(var.QtVersionMajor)OpenGLWidgets.dll"/>
             <?endif ?>
 

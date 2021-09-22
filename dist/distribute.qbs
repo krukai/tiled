@@ -80,8 +80,12 @@ Product {
                     "Qt" + major + "Widgets" + postfix
                 );
 
-                if (Qt.core.versionMajor >= 6)
-                    list.push("Qt" + major + "OpenGLWidgets" + postfix);
+                if (Qt.core.versionMajor >= 6) {
+                    list.push(
+                        "Qt" + major + "OpenGL" + postfix,
+                        "Qt" + major + "OpenGLWidgets" + postfix
+                    );
+                }
             }
 
             if (qbs.targetOS.contains("windows")) {
