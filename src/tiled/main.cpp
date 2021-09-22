@@ -51,7 +51,10 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-#if QT_VERSION >= 0x050700 && QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QtGui/private/qguiapplication_p.h>
+#include <QtGui/qpa/qplatformintegration.h>
+#elif QT_VERSION >= 0x050700
 #include <QtPlatformHeaders\QWindowsWindowFunctions>
 #endif
 
@@ -500,8 +503,14 @@ int main(int argc, char *argv[])
     w.show();
 
     a.setActivationWindow(&w);
-#if defined(Q_OS_WIN) && QT_VERSION >= 0x050700 && QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#ifdef Q_OS_WIN
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    using QWindowsApplication = QNativeInterface::Private::QWindowsApplication;
+    if (auto nativeWindowsApp = dynamic_cast<QWindowsApplication *>(QGuiApplicationPrivate::platformIntegration()))
+        nativeWindowsApp->setWindowActivationBehavior(QWindowsApplication::AlwaysActivateWindow);
+#elif QT_VERSION >= 0x050700
     QWindowsWindowFunctions::setWindowActivationBehavior(QWindowsWindowFunctions::AlwaysActivateWindow);
+#endif
 #endif
 
     QObject::connect(&a, &TiledApplication::fileOpenRequest,
