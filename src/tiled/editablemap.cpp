@@ -72,9 +72,12 @@ EditableMap::EditableMap(MapDocument *mapDocument, QObject *parent)
     connect(mapDocument, &MapDocument::layerAdded, this, &EditableMap::attachLayer);
     connect(mapDocument, &MapDocument::layerRemoved, this, &EditableMap::detachLayer);
 
-    connect(mapDocument, &MapDocument::currentLayerChanged, this, &EditableMap::onCurrentLayerChanged);
+    connect(mapDocument, &MapDocument::currentLayerChanged, this, &EditableMap::currentLayerChanged);
     connect(mapDocument, &MapDocument::selectedLayersChanged, this, &EditableMap::selectedLayersChanged);
     connect(mapDocument, &MapDocument::selectedObjectsChanged, this, &EditableMap::selectedObjectsChanged);
+
+    connect(mapDocument, &MapDocument::regionChanged, this, &EditableMap::onRegionChanged);
+    connect(mapDocument, &MapDocument::regionEdited, this, &EditableMap::onRegionEdited);
 }
 
 /**
@@ -688,9 +691,18 @@ void EditableMap::detachMapObjects(const QList<MapObject *> &mapObjects)
     }
 }
 
-void EditableMap::onCurrentLayerChanged(Layer *)
+void EditableMap::onRegionChanged(const QRegion &region, TileLayer *layer)
 {
-    emit currentLayerChanged();
+    auto &editableManager = EditableManager::instance();
+    const auto editableLayer = static_cast<EditableTileLayer*>(editableManager.editableLayer(this, layer));
+    emit regionChanged(RegionValueType(region), editableLayer);
+}
+
+void EditableMap::onRegionEdited(const QRegion &region, TileLayer *layer)
+{
+    auto &editableManager = EditableManager::instance();
+    const auto editableLayer = static_cast<EditableTileLayer*>(editableManager.editableLayer(this, layer));
+    emit regionEdited(RegionValueType(region), editableLayer);
 }
 
 MapRenderer *EditableMap::renderer() const

@@ -32,6 +32,7 @@ class AutomappingManager;
 class EditableLayer;
 class EditableMapObject;
 class EditableSelectedArea;
+class EditableTileLayer;
 class EditableTileset;
 
 class EditableMap : public EditableAsset
@@ -195,6 +196,9 @@ signals:
     void selectedLayersChanged();
     void selectedObjectsChanged();
 
+    void regionChanged(const Tiled::RegionValueType &region, Tiled::EditableTileLayer *layer);
+    void regionEdited(const Tiled::RegionValueType &region, Tiled::EditableTileLayer *layer);
+
 private:
     void documentChanged(const ChangeEvent &change);
 
@@ -203,7 +207,8 @@ private:
     void attachMapObjects(const QList<MapObject*> &mapObjects);
     void detachMapObjects(const QList<MapObject*> &mapObjects);
 
-    void onCurrentLayerChanged(Layer *);
+    void onRegionChanged(const QRegion &region, TileLayer *layer);
+    void onRegionEdited(const QRegion &region, TileLayer *layer);
 
     MapRenderer *renderer() const;
 
